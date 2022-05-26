@@ -1,100 +1,69 @@
-// Start quiz
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const questionContainerElement = document.getElementById('question-container')
-const questionElement = document.getElementById('question')
+const startButton = document.getElementById('start-btn');
+const nextButton = document.getElementById('next-btn');
+const questionContainerElement = document.getElementById('question-container');
+const questionElement = document.getElementById('question');
 const answerButtonsElement = document.getElementById('answer-buttons')
 
 let shuffledQuestions, currentQuestionIndex
 
-const questions = [
-    {
-        question: "ADD QUESTION",
-        answers: [
-            { text: '', correct: true },
-            { text: '', correct: false }
-        ]
-    },
-    {
-        question: "",
-        answers: [
-
-        ]
-    },
-    {
-        question: "",
-        answers: [
-
-        ]
-    },
-    {
-        question: "",
-        answers: [
-
-        ]
-    },
-    {
-        question: "",
-        answers: [
-            
-        ]
-    }
-]
-
-startButton.addEventListener('click', startGame())
+startButton.addEventListener('click', startGame);
 nextButton.addEventListener('click', () => {
     currentQuestionIndex++;
-    setNextQuestion();
+    setNextQuestion()
 })
 
 function startGame() {
-    startButton.classList.add('hide');
-    shuffledQuestions = questions.sort(() => Math.random() - .5);
+    console.log('Started')
+    startButton.classList.add('hide')
+    shuffledQuestions = questions.sort(() => Math.random() - .5)
     currentQuestionIndex = 0;
-    questionContainerElement.classList.remove('hide');
-    setNextQuestion();
+    questionContainerElement.classList.remove('hide')
+    setNextQuestion()
 }
 
 function setNextQuestion() {
     resetState();
-    showQuestion(shuffledQuestions[currentQuestionIndex]);
+    showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
 function showQuestion(question) {
     questionElement.innerText = question.question;
     question.answers.forEach(answer => {
-        const button = document.createElement('button');
+        const button = document.createElement('button')
         button.innerText = answer.text;
-        button.classList.add('btn');
+        button.classList.add('btn')
         if (answer.correct) {
-            button.dataset.correct = answer.correct
+            button.dataset.correct = answer.correct;
         }
-        button.addEventListener('clicl', selectAnswer);
-        answerButtonsElement.appendChild(button);
+        button.addEventListener('click', selectAnswer)
+        answerButtonsElement.appendChild(button)
     })
 }
 
 function resetState() {
-    clearStatusClass(document.body);
-    nextButton.classList.add('hide');
+    // CHECK THIS FOR BUGS IF TIMER NOT WORKING
+    clearStatusClass(document.body)
+    nextButton.classList.add('hide')
     while (answerButtonsElement.firstChild) {
-        answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+        answerButtonsElement.removeChild(answerButtonsElement.firstChild);
     }
 }
 
 function selectAnswer(e) {
-    const selectedButton = e.target;
-    const correct = selectedButton.dataset.correct;
-    setSTatusClass(document.body, correct);
+    const selectedButton = e.target
+    const correct = selectedButton.dataset.correct
+    setStatusClass(document.body, correct)
     Array.from(answerButtonsElement.children).forEach(button => {
-        setStatusClass(button, button.dataset.correct);
+        setStatusClass(button, button.dataset.correct)
     })
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove('hide')
     } else {
+        // ADD HIGH SCORE FUNCTIONALITY HERE
         startButton.innerText = 'Restart'
         startButton.classList.remove('hide')
     }
+
 }
 
 function setStatusClass(element, correct) {
@@ -111,32 +80,42 @@ function clearStatusClass(element) {
     element.classList.remove('wrong')
 }
 
-// function endQuiz()
+// Questions
 
-// function startTimer(duration, display) {
-//     var timer = duration, minutes, seconds;
-//     setInterval(function () {
-//         minutes = parseInt(timer / 60, 10)
-//         seconds = parseInt(timer % 60, 10);
-
-//         minutes = minutes < 10 ? "0" + minutes : minutes;
-//         seconds = seconds < 10 ? "0" + seconds : seconds;
-
-//         display.textContent = minutes + ":" + seconds;
-
-//         if (--timer < 0) {
-//             timer = 0;
-//             // timer = duration; // uncomment this line to reset timer automatically after reaching 0
-//         }
-//     }, 1000);
-// }
-
-// window.onload = function () {
-//     var time = 60 / 2, // your time in seconds here
-//         display = document.querySelector('#safeTimerDisplay');
-//     startTimer(time, display);
-// };
-
-// function displayHighScore() {
-
-// }
+const questions = [
+    {
+        question: "What does HTML stand for?",
+        answers: [
+            { text: 'Hypertext Markup Language', correct: true },
+            { text: 'Happy Turtle Meetup Lawyers', correct: false }
+        ]
+    },
+    {
+        question: "What does CSS stand for?",
+        answers: [
+            { text: 'Cascading Style Sheets', correct: true },
+            { text: 'Corrosive Septic Squalor', correct: false }
+        ]
+    },
+    {
+        question: "Which language is used for scripting in Web Development?",
+        answers: [
+            { text: 'JavaScript', correct: true },
+            { text: 'Lisp', correct: false }
+        ]
+    },
+    {
+        question: "Which is a web api?",
+        answers: [
+            { text: 'local storage', correct: true },
+            { text: 'LUA', correct: false }
+        ]
+    },
+    {
+        question: "What tag is used to connect JavaScript to an index.html file?",
+        answers: [
+            { text: '<script>', correct: true },
+            { text: '<div>', correct: false }
+        ]
+    }
+]
